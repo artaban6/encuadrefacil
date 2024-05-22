@@ -2,19 +2,22 @@ const valuesForm = document.getElementById("values-form");
 const totalsForm = document.getElementById("totals-form");
 const studentsInfoForm = document.getElementById("students-info-form");
 const studentsForm = document.getElementById("students-form");
+const confirmCloseDialog = document.getElementById("confirm-close-dialog");
 
 
 const editValuesBtn = document.getElementById("edit-values-btn");
 const editTotalsBtn = document.getElementById("edit-totals-btn");
 const editStudentsBtn = document.getElementById("edit-students-btn");
 const addNewStudentBtn = document.getElementById("add-new-student-btn");
+const cancelBtn = document.getElementById("cancel-btn");
+
 
 
 const closeValuesFormBtn = document.getElementById("close-values-form-btn");
 const closeTotalsFormBtn = document.getElementById("close-totals-form-btn");
 const closeStudentsInfoFormBtn = document.getElementById("close-students-info-form-btn");
 const closeStudentsFormBtn = document.getElementById("close-students-form-btn");
-const closeResultsContainerBtn = document.getElementById("close-results-continer-btn");
+
 
 const studentsInfoContainer = document.getElementById("students-info-container");
 const studentsNameInput = document.getElementById("students-name-input");
@@ -26,6 +29,10 @@ const studentsAttendanceAndInvolvementInput = document.getElementById("students-
 
 const seeResultsBtn = document.getElementById("see-results-btn");
 const resultsContainer = document.getElementById("results-container");
+
+const refreshBtnTwo = document.getElementById("refresh-btn-two");
+const closeResultsContainerBtn = document.getElementById("close-results-continer-btn");
+
 
 const studentsData = [];
 let currentStudent = {};
@@ -227,6 +234,10 @@ seeResultsBtn.addEventListener("click", () => {
   }
 });
 
+
+
+
+
 const displayResults = () => {
   resultsContainer.innerHTML = "";
 
@@ -255,8 +266,28 @@ const displayResults = () => {
   });
 // _______ // 
   resultsContainer.innerHTML += `
-    <button id="exportExcelBtn" class="btn">Exportar a Excel</button>
+  <button id="exportExcelBtn" class="btn-2">Exportar a Excel</button>
+  <button id="refresh-results-btn" class="btn-2">Crear Nuevo Encuadre</button>
   `;
 // _______ //
+
+
+
 document.getElementById('exportExcelBtn').addEventListener('click', exportToExcel);
+document.getElementById('refresh-results-btn').addEventListener('click', () => {
+  
+  // quitar console log
+  console.log("button clicked");
+  confirmCloseDialog.showModal();
+  console.log("popo");
+});
+
+cancelBtn.addEventListener("click", () => confirmCloseDialog.close());
+
+refreshBtnTwo.addEventListener("click",  () => {
+  confirmCloseDialog.close();
+  location.reload();
+}); 
+
 };
+

@@ -1,197 +1,158 @@
 .form-control {
-    display: block;
+  display: block;
 }
 
 .close-icon {
-    width: 25px;
-    height: 25px;
+  width: 25px;
+  height: 25px;
 }
 
 .close-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
+  background: none;
+  border: none;
+  cursor: pointer;
+}
 
 
 
 body {
-    background-color: rgba(201, 184, 108, 0.916);
+  background-color: var(--white);
 }
 
 :root {
-    --white: #fff;
-    --light-grey: #f5f6f7;
-    --dark-grey: #0a0a23;
-    --yellow: #f1be32;
-    --golden-yellow: #feac32;
-  }
-  
-  *,
-  *::before,
-  *::after {
-    margin: auto;
-    padding: 0;
-    box-sizing: border-box;
-  }
+  --white: #fff;
+  --light-grey: #f5f6f7;
+  --dark-grey: #0a0a23;
+  --yellow: #f1be32;
+  --golden-yellow: #feac32;
+  --dark-blue: #0A3D62;
+}
 
-  main {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+*,
+*::before,
+*::after {
+  margin: auto;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  .encuadre {
-    background-color: var(--white);
-    width: 1000px;
-    height: 750px;
-    border: 5px solid var(--yellow);
-    border-radius: 8px;
-    padding: 15px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
-  .encuadre-info {
-    width: 1000px;
-    height: 750px;
-    padding: 15px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
+.encuadre {
+  background-color: var(--white);
+  width: 1000px;
+  height: 750px;
+  border: 5px solid var(--dark-blue);
+  border-radius: 8px;
+  padding: 15px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
-  .btn {
-    cursor: pointer;
-    width: 200px;
-    color: var(--dark-grey);
-    background-color: var(--golden-yellow);
-    background-image: linear-gradient(#fecc4c, #ffac33);
-    border-color: var(--golden-yellow);
-    border-width: 3px;
-    margin: auto;   
-    height: 50px;
-    font-size: 18px;
-    font-weight: bold;
+.encuadre-info {
+  width: 1000px;
+  height: 750px;
+  padding: 15px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn {
+  cursor: pointer;
+  width: 40%;
+  color: var(--dark-blue);
+  background-color: #3498DB;
+  border-color: var(--dark-blue);
+  border-width: 3px;
+  margin: auto;   
+  height: 20%;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 10px;
+  transform: translate3d(0, 0, 0);
+  transition: all .3s;
+}
+
+
+
+.btn-2 {
+cursor: pointer;
+width: 300px;
+color: var(--dark-blue);
+background-color: #3498DB;
+border-color: var(--dark-blue);
+border-width: 3px;
+margin: auto;   
+height: 50px;
+font-size: 18px;
+font-weight: bold;
+border-radius: 10px;
+}
+
+.btn:hover {
+background-color: #3498DB;
 }
 
 h1 {
-    color: var(--light-grey);
-    margin: 20px 0 40px 0;
-    font-size: 40px;
+  color: var(--light-grey);
+  margin: 20px 0 40px 0;
+  font-size: 40px;
 }
 
 h3 {
-    font-size: 30px;
+  font-size: 30px;
 }
-    
+  
 
 h5 {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 
 
 .students-form-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-}
-
-.students-form {
-  display: flex;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: var(--white);
-  border-radius: 5px;
-  padding: 15px;
-  width: 1000px;
-  height: 750px;
-  flex-direction: column;
-  justify-content: space-between;
-  overflow: auto;
+display: flex;
+flex-direction: column;
+justify-content: space-around;
 }
 
 
-
-.totals-form {
-  display: flex;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: var(--white);
-  border-radius: 5px;
-  padding: 15px;
-  width: 1000px;
-  height: 750px;
-  flex-direction: column;
-  justify-content: space-between;
-  overflow: auto;
-}
-
-.values-form {
-  display: flex;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: var(--white);
-  border-radius: 5px;
-  padding: 15px;
-  width: 1000px;
-  height: 750px;
-  flex-direction: column;
-  justify-content: space-between;
-  overflow: auto;
-}
-
-.students-info-form {
-  display: flex;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: var(--white);
-  border-radius: 5px;
-  padding: 15px;
-  width: 1000px;
-  height: 750px;
-  flex-direction: column;
-  justify-content: space-between;
-  overflow: auto;
-}
-
-
+.students-form, .totals-form,
+.values-form, .students-info-form,
 .results-container {
-  display: flex;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: var(--white);
-  border-radius: 5px;
-  padding: 15px;
-  width: 1000px;
-  height: 750px;
-  flex-direction: column;
-  justify-content: space-between;
-  overflow: auto;
+display: flex;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+background-color: var(--white);
+border-radius: 5px;
+padding: 15px;
+width: 950px;
+height: 700px;
+flex-direction: column;
+justify-content: space-between;
+overflow: auto;
 }
+
+
 
 
 .form-header {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 20px;
-  height: 20px;
+position: absolute;
+top: 0;
+right: 0;
+width: 20px;
+height: 20px;
 }
 
 #students-name-input,
@@ -200,29 +161,50 @@ h5 {
 #students-exam-input,
 #students-homework-input,
 #students-attendance-and-involvement-input {
-  display: block;
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 2px;
+display: block;
+width: 100%;
+margin-bottom: 10px;
+padding: 2px;
 }
 
 #students-info-container {
-  height: 100%;
-  overflow-y: auto;
+height: 100%;
+overflow-y: auto;
 }
 .student {
-  margin: 5px 0;
+margin: 5px 0;
+}
+
+#confirm-close-dialog {
+padding: 30px;
+margin: 30px auto;
+position: fixed;
+top: 50%;
+left: 35%;
+transform: translate(-50%, -50%);
+border-radius: 15px;
+}
+
+.confirm-close-dialog-btn-container {
+display: flex;
+justify-content: center;
+margin-top: 30px;
+}
+
+.discard-message-text {
+font-weight: bold;
+font-size: 1.5rem;
 }
 
 .hidden-1 {
-  display: none;
+display: none;
 }
 .hidden-2 {
-  display: none;
+display: none;
 }
 .hidden-3 {
-  display: none;
+display: none;
 }
 .hidden-4 {
-  display: none;
+display: none;
 }
