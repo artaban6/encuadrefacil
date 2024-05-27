@@ -114,7 +114,7 @@ const updateStudentsInfoContainer = () => {
       <p><strong>Respuestas correctas en el Examen:</strong> ${exam}<p>
       <p><strong>Tareas entregadas:</strong> ${homework}<p>
       <p><strong>Asistencias del Estudiante:</strong> ${attendance}<p>
-      <button onclick="deleteStudent(this)" type="button" class="btn">Borrar</button>
+      <button onclick="deleteStudent(this)" type="button" class="btn-3">Borrar</button>
       </div>
       `)
     }
@@ -227,6 +227,30 @@ const exportToExcel = () => {
 
 
 seeResultsBtn.addEventListener("click", () => {
+  const percentageInputs = [
+    document.getElementById("activities-input").value,
+    document.getElementById("projects-input").value,
+    document.getElementById("exam-input").value,
+    document.getElementById("homework-input").value,
+    document.getElementById("attendance-and-involvement-input").value
+  ];
+
+  const totalInputs = [
+    document.getElementById("total-activities-input").value,
+    document.getElementById("total-projects-input").value,
+    document.getElementById("total-exam-input").value,
+    document.getElementById("total-homework-input").value,
+    document.getElementById("total-attendance-and-involvement-input").value
+  ];
+
+  const arePercentageValuesFilled = percentageInputs.every(value => value !== "" && value !== null);
+  const areTotalValuesFilled = totalInputs.every(value => value !== "" && value !== null);
+
+  if (!arePercentageValuesFilled || !areTotalValuesFilled) {
+    alert("Por favor complete el Paso 1 antes de continuar.");
+    return;
+  }
+
   resultsContainer.classList.toggle("hidden-2");
 
   if (!resultsContainer.classList.contains("hidden-2")) {
@@ -290,4 +314,5 @@ refreshBtnTwo.addEventListener("click",  () => {
 }); 
 
 };
+
 
