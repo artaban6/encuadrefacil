@@ -33,6 +33,12 @@ const resultsContainer = document.getElementById("results-container");
 const refreshBtnTwo = document.getElementById("refresh-btn-two");
 const closeResultsContainerBtn = document.getElementById("close-results-continer-btn");
 
+const totalActivitiesInput = document.getElementById("total-activities-input");
+const totalProjectsInput = document.getElementById("total-projects-input");
+const totalExamInput = document.getElementById("total-exam-input");
+const totalHomeworkInput = document.getElementById("total-homework-input");
+const totalAttendanceAndInvolvementInput = document.getElementById("total-attendance-and-involvement-input");
+
 
 const studentsData = [];
 let currentStudent = {};
@@ -57,11 +63,11 @@ const handleValuesFormSubmit = (e) => {
   }
 
   totalValues = {
-    activities: parseInt(document.getElementById("total-activities-input").value),
-    projects: parseInt(document.getElementById("total-projects-input").value),
-    exam: parseInt(document.getElementById("total-exam-input").value),
-    homework: parseInt(document.getElementById("total-homework-input").value),
-    attendance: parseInt(document.getElementById("total-attendance-and-involvement-input").value)
+    activities: parseInt(totalActivitiesInput.value),
+    projects: parseInt(totalProjectsInput.value),
+    exam: parseInt(totalExamInput.value),
+    homework: parseInt(totalHomeworkInput.value),
+    attendance: parseInt(totalAttendanceAndInvolvementInput.value)
   };
 
   //borrar console
@@ -144,9 +150,42 @@ const reset = () => {
 }
 
 
-editStudentsBtn.addEventListener("click", () =>
+editStudentsBtn.addEventListener("click", () => {
+// está repetido, necesito hacer que solo tenga la función y no todo
+
+  const percentageInputs = [
+    document.getElementById("activities-input").value,
+    document.getElementById("projects-input").value,
+    document.getElementById("exam-input").value,
+    document.getElementById("homework-input").value,
+    document.getElementById("attendance-and-involvement-input").value
+  ];
+
+  const totalInputs = [
+    document.getElementById("total-activities-input").value,
+    document.getElementById("total-projects-input").value,
+    document.getElementById("total-exam-input").value,
+    document.getElementById("total-homework-input").value,
+    document.getElementById("total-attendance-and-involvement-input").value
+  ];
+
+  const arePercentageValuesFilled = percentageInputs.every(value => value !== "" && value !== null);
+  const areTotalValuesFilled = totalInputs.every(value => value !== "" && value !== null);
+
+  if (!arePercentageValuesFilled || !areTotalValuesFilled) {
+    alert("Por favor complete el Paso 1 antes de continuar.");
+    return;
+  }
+//--------- de ${}
+studentsActivitiesInput.placeholder = `de ${totalActivitiesInput.value}`;
+studentsProjectsInput.placeholder = `de ${totalProjectsInput.value}`;
+studentsExamInput.placeholder = `de ${totalExamInput.value}`;
+studentsHomeworkInput.placeholder = `de ${totalHomeworkInput.value}`;
+studentsAttendanceAndInvolvementInput.placeholder = `de ${totalAttendanceAndInvolvementInput.value}`;
+//---------
   studentsInfoForm.classList.toggle("hidden-3")
-);
+  
+});
 
 closeStudentsInfoFormBtn.addEventListener("click", () => 
     studentsInfoForm.classList.toggle("hidden-3")
@@ -166,7 +205,19 @@ closeValuesFormBtn.addEventListener("click", () =>
 studentsInfoForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
-addOrUpdateStudent();
+// ----- checar si están en rango las cosas
+  if (parseFloat(studentsActivitiesInput.value) <= parseFloat(totalActivitiesInput.value) &&
+      parseFloat(studentsProjectsInput.value) <= parseFloat(totalProjectsInput.value) &&
+      parseFloat(studentsExamInput.value) <= parseFloat(totalExamInput.value) &&
+      parseFloat(studentsHomeworkInput.value) <= parseFloat(totalHomeworkInput.value) &&
+      parseFloat(studentsAttendanceAndInvolvementInput.value) <= parseFloat(totalAttendanceAndInvolvementInput.value)) {
+    addOrUpdateStudent();
+  } else {
+    alert("El número de del Estudiante no puede ser mayor que el Total.");
+    return;
+  }
+// -----
+
  });
 
  // quitar handletotals
@@ -279,13 +330,16 @@ const displayResults = () => {
     resultsContainer.innerHTML += `
       <div class="student">
         <p><strong>Nombre del Estudiante:</strong> ${studentName}</p>
-        <p><strong>Calificación de actividades:</strong> ${activitiesGrade}</p>
-        <p><strong>Calificación de proyectos:</strong> ${projectsGrade}</p>
-        <p><strong>Calificación del examen:</strong> ${examGrade}</p>
-        <p><strong>Calificación de tareas:</strong> ${homeworkGrade}</p>
-        <p><strong>Calificación de asistencias:</strong> ${attendanceGrade}</p>
-        <p><strong>Calificación general:</strong> ${overallGrade}</p>
+        <p><strong>Calificación de actividades:</strong> ${activitiesGrade.toFixed(1)}</p>
+        <p><strong>Calificación de proyectos:</strong> ${projectsGrade.toFixed(1)}</p>
+        <p><strong>Calificación del examen:</strong> ${examGrade.toFixed(1)}</p>
+        <p><strong>Calificación de tareas:</strong> ${homeworkGrade.toFixed(1)}</p>
+        <p><strong>Calificación de asistencias:</strong> ${attendanceGrade.toFixed(1)}</p>
+        <p><strong>Calificación general:</strong> ${overallGrade.toFixed(1)}</p>
+        <hr class="line"/>
+        <hr class="line"/>
       </div>
+      
     `;
   });
 // _______ // 
