@@ -212,6 +212,7 @@ box-sizing: border-box;
 }
 
 .student p {
+  font-size: 18px;
   margin: 8px 0;
   color: #333;
 }
@@ -247,6 +248,7 @@ margin-top: 30px;
 font-weight: bold;
 font-size: 1.5rem;
 }
+
 
 .hidden-1, .hidden-2, .hidden-3, .hidden-4 {
   display: none;
@@ -317,6 +319,16 @@ font-size: 1.5rem;
 }
 
 .values-and-totals-form-footer {
-  margin-top: 20px; 
-  align-self: flex-end; 
+  margin-top: 100px;
+}
+
+.results-footer {
+    position: sticky; 
+    bottom: 0; 
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white; 
+    padding: 10px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    z-index: 1000; 
 }

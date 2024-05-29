@@ -39,6 +39,12 @@ const totalExamInput = document.getElementById("total-exam-input");
 const totalHomeworkInput = document.getElementById("total-homework-input");
 const totalAttendanceAndInvolvementInput = document.getElementById("total-attendance-and-involvement-input");
 
+const activitiesInput = document.getElementById("activities-input");
+const projectsInput = document.getElementById("projects-input");
+const examInput = document.getElementById("exam-input");
+const homeworkInput = document.getElementById("homework-input");
+const attendanceAndInvolvementInput = document.getElementById("attendance-and-involvement-input");
+
 
 const studentsData = [];
 let currentStudent = {};
@@ -50,11 +56,11 @@ const handleValuesFormSubmit = (e) => {
   e.preventDefault();
 
   percentageValues = {
-    activities: parseFloat(document.getElementById("activities-input").value),
-    projects: parseFloat(document.getElementById("projects-input").value),
-    exam: parseFloat(document.getElementById("exam-input").value),
-    homework: parseFloat(document.getElementById("homework-input").value),
-    attendance: parseFloat(document.getElementById("attendance-and-involvement-input").value)
+    activities: parseFloat(activitiesInput.value),
+    projects: parseFloat(projectsInput.value),
+    exam: parseFloat(examInput.value),
+    homework: parseFloat(homeworkInput.value),
+    attendance: parseFloat(attendanceAndInvolvementInput.value)
   };
   const totalPercentage = Object.values(percentageValues).reduce((acc, val) => acc + val, 0);
   if (totalPercentage !== 100) {
@@ -115,11 +121,11 @@ const updateStudentsInfoContainer = () => {
       (studentsInfoContainer.innerHTML += `
       <div class="student" id="${id}">
       <p><strong>Nombre del Estudiante:</strong> ${studentName}<p>
-      <p><strong>Actividades entregadas:</strong> ${activities}<p>
-      <p><strong>Proyectos entregados:</strong> ${projects}<p>
-      <p><strong>Respuestas correctas en el Examen:</strong> ${exam}<p>
-      <p><strong>Tareas entregadas:</strong> ${homework}<p>
-      <p><strong>Asistencias del Estudiante:</strong> ${attendance}<p>
+      <p><strong>Actividades entregadas:</strong> ${activities} de ${totalActivitiesInput.value}.<p>
+      <p><strong>Proyectos entregados:</strong> ${projects} de ${totalProjectsInput.value}.<p>
+      <p><strong>Respuestas correctas en el Examen:</strong> ${exam} de ${totalExamInput.value}.<p>
+      <p><strong>Tareas entregadas:</strong> ${homework} de ${totalHomeworkInput.value}.<p>
+      <p><strong>Asistencias del Estudiante:</strong> ${attendance} de ${totalAttendanceAndInvolvementInput.value}.<p>
       <button onclick="deleteStudent(this)" type="button" class="btn-3">Borrar</button>
       </div>
       `)
@@ -213,7 +219,7 @@ studentsInfoForm.addEventListener("submit", (e) => {
       parseFloat(studentsAttendanceAndInvolvementInput.value) <= parseFloat(totalAttendanceAndInvolvementInput.value)) {
     addOrUpdateStudent();
   } else {
-    alert("El número de del Estudiante no puede ser mayor que el Total.");
+    alert("El número del Estudiante no puede ser mayor que el Total.");
     return;
   }
 // -----
@@ -231,18 +237,59 @@ studentsInfoForm.addEventListener("submit", (e) => {
 
 const exportToExcel = () => {
   const wb = XLSX.utils.book_new();
-  const ws = XLSX.utils.aoa_to_sheet([
+  const wsData = [
     ["Nombre del Estudiante", "Calificación de actividades", "Calificación de proyectos", "Calificación del examen", "Calificación de tareas", "Calificación de asistencias", "Calificación general"],
     ...studentsData.map(({ studentName, activities, projects, exam, homework, attendance }) => {
+      const capitalizeName = name => name.replace(/\b\w/g, char => char.toUpperCase());
+
       const activitiesGrade = (activities / totalValues.activities) * percentageValues.activities;
       const projectsGrade = (projects / totalValues.projects) * percentageValues.projects;
       const examGrade = (exam / totalValues.exam) * percentageValues.exam;
       const homeworkGrade = (homework / totalValues.homework) * percentageValues.homework;
       const attendanceGrade = (attendance / totalValues.attendance) * percentageValues.attendance;
       const overallGrade = (activitiesGrade + projectsGrade + examGrade + homeworkGrade + attendanceGrade);
-      return [studentName, activitiesGrade, projectsGrade, examGrade, homeworkGrade, attendanceGrade, overallGrade];
+
+      return [
+        capitalizeName(studentName),
+        activitiesGrade.toFixed(1),
+        projectsGrade.toFixed(1),
+        examGrade.toFixed(1),
+        homeworkGrade.toFixed(1),
+        attendanceGrade.toFixed(1),
+        overallGrade.toFixed(1)
+      ];
     })
-  ]);
+  ];
+
+  const ws = XLSX.utils.aoa_to_sheet(wsData);
+
+  
+  const headerStyle = { font: { bold: true }, alignment: { horizontal: 'center' } };
+  const dataStyle = { alignment: { horizontal: 'center' } };
+
+  ws['!cols'] = [
+    { wch: 30 }, // Student Name
+    { wch: 25 }, // Activities Grade
+    { wch: 25 }, // Projects Grade
+    { wch: 25 }, // Exam Grade
+    { wch: 25 }, // Homework Grade
+    { wch: 25 }, // Attendance Grade
+    { wch: 25 }  // Overall Grade
+  ];
+
+  for (let C = 0; C < wsData[0].length; C++) {
+    const cellAddress = XLSX.utils.encode_cell({ r: 0, c: C });
+    if (!ws[cellAddress]) ws[cellAddress] = {};
+    ws[cellAddress].s = headerStyle;
+  }
+
+  for (let R = 1; R < wsData.length; R++) {
+    for (let C = 0; C < wsData[R].length; C++) {
+      const cellAddress = XLSX.utils.encode_cell({ r: R, c: C });
+      if (!ws[cellAddress]) ws[cellAddress] = {};
+      ws[cellAddress].s = dataStyle;
+    }
+  }
 
   XLSX.utils.book_append_sheet(wb, ws, 'Resultados');
 
@@ -273,7 +320,7 @@ const exportToExcel = () => {
     }
   }
 };
-
+ 
 // _______________//
 
 
@@ -330,22 +377,22 @@ const displayResults = () => {
     resultsContainer.innerHTML += `
       <div class="student">
         <p><strong>Nombre del Estudiante:</strong> ${studentName}</p>
-        <p><strong>Calificación de actividades:</strong> ${activitiesGrade.toFixed(1)}</p>
-        <p><strong>Calificación de proyectos:</strong> ${projectsGrade.toFixed(1)}</p>
-        <p><strong>Calificación del examen:</strong> ${examGrade.toFixed(1)}</p>
-        <p><strong>Calificación de tareas:</strong> ${homeworkGrade.toFixed(1)}</p>
-        <p><strong>Calificación de asistencias:</strong> ${attendanceGrade.toFixed(1)}</p>
-        <p><strong>Calificación general:</strong> ${overallGrade.toFixed(1)}</p>
-        <hr class="line"/>
-        <hr class="line"/>
+        <p><strong>Calificación de actividades:</strong> ${activitiesGrade.toFixed(1)} de ${activitiesInput.value}.</p>
+        <p><strong>Calificación de proyectos:</strong> ${projectsGrade.toFixed(1)} de ${projectsInput.value}.</p>
+        <p><strong>Calificación del examen:</strong> ${examGrade.toFixed(1)} de ${examInput.value}.</p>
+        <p><strong>Calificación de tareas:</strong> ${homeworkGrade.toFixed(1)} de ${homeworkInput.value}.</p>
+        <p><strong>Calificación de asistencias:</strong> ${attendanceGrade.toFixed(1)} de ${attendanceAndInvolvementInput.value}.</p>
+        <p><strong>Calificación general:</strong> ${overallGrade.toFixed(1)} de 100.</p>
       </div>
       
     `;
   });
 // _______ // 
   resultsContainer.innerHTML += `
+  <div class="results-footer">
   <button id="exportExcelBtn" class="btn-2">Exportar a Excel</button>
   <button id="refresh-results-btn" class="btn-2">Crear Nuevo Encuadre</button>
+  </div>
   `;
 // _______ //
 
