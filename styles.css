@@ -205,15 +205,15 @@ box-sizing: border-box;
 
 .student {
   background-color: #f9f9f9;
-  padding: 20px;
-  margin: 20px 0;
+  padding: 10px;
+  margin: 16px 0;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .student p {
   font-size: 18px;
-  margin: 8px 0;
+  margin: 3px 0;
   color: #333;
 }
 
