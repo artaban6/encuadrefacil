@@ -85,7 +85,35 @@ const handleValuesFormSubmit = (e) => {
 
 // borrar handle
 
+const validateNumberInput = (event) => {
+  const regex = /^[0-9]*\.?[0-9]*$/;
+  const inputValue = event.target.value;
+  if (!regex.test(inputValue)) {
+    event.target.value = inputValue.slice(0, -1); 
+  }
+};
 
+const numericInputs = [
+  studentsActivitiesInput,
+  studentsProjectsInput,
+  studentsExamInput,
+  studentsHomeworkInput,
+  studentsAttendanceAndInvolvementInput,
+  totalActivitiesInput,
+  totalProjectsInput,
+  totalExamInput,
+  totalHomeworkInput,
+  totalAttendanceAndInvolvementInput,
+  activitiesInput,
+  projectsInput,
+  examInput,
+  homeworkInput,
+  attendanceAndInvolvementInput
+];
+
+numericInputs.forEach(input => {
+  input.addEventListener("input", validateNumberInput);
+});
 
 
 const addOrUpdateStudent = () => {
