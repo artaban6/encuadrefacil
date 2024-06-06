@@ -118,31 +118,41 @@ const updateStudentsInfoContainer = () => {
 
   studentsData.forEach(
     ({ id, studentName, activities, projects, exam, homework, attendance }) => {
-      (studentsInfoContainer.innerHTML += `
-      <div class="student" id="${id}">
-      <p><strong>Nombre del Estudiante:</strong> ${studentName}<p>
-      <p><strong>Actividades entregadas:</strong> ${activities} de ${totalActivitiesInput.value}.<p>
-      <p><strong>Proyectos entregados:</strong> ${projects} de ${totalProjectsInput.value}.<p>
-      <p><strong>Respuestas correctas en el Examen:</strong> ${exam} de ${totalExamInput.value}.<p>
-      <p><strong>Tareas entregadas:</strong> ${homework} de ${totalHomeworkInput.value}.<p>
-      <p><strong>Asistencias del Estudiante:</strong> ${attendance} de ${totalAttendanceAndInvolvementInput.value}.<p>
-      <button onclick="deleteStudent(this)" type="button" class="btn-3">Borrar</button>
-      </div>
-      `)
+      const studentDiv = document.createElement("div");
+      studentDiv.classList.add("student");
+      studentDiv.id = id;
+
+      studentDiv.innerHTML = `
+      <p><strong>Nombre del Estudiante:</strong> ${studentName}</p>
+      <p><strong>Actividades entregadas:</strong> ${activities} de ${totalActivitiesInput.value}.</p>
+      <p><strong>Proyectos entregados:</strong> ${projects} de ${totalProjectsInput.value}.</p>
+      <p><strong>Respuestas correctas en el Examen:</strong> ${exam} de ${totalExamInput.value}.</p>
+      <p><strong>Tareas entregadas:</strong> ${homework} de ${totalHomeworkInput.value}.</p>
+      <p><strong>Asistencias del Estudiante:</strong> ${attendance} de ${totalAttendanceAndInvolvementInput.value}.</p>
+      `;
+
+      const deleteButton = document.createElement("button");
+      deleteButton.type = "button";
+      deleteButton.classList.add("btn-3");
+      deleteButton.innerText = "Borrar";
+      deleteButton.onclick = () => deleteStudent(id);
+
+      studentDiv.appendChild(deleteButton);
+      studentsInfoContainer.appendChild(studentDiv);
     }
   );
 };
 
-const deleteStudent = (buttonEl) => {
+const deleteStudent = (studentId) => {
   const dataArrIndex = studentsData.findIndex(
-    (item) => item.id === buttonEl.parentElement.id
+    (item) => item.id === studentId
   );
 
-  buttonEl.parentElement.remove();
-  studentsData.splice(dataArrIndex, 1);
-
-  updateStudentsInfoContainer();
-}
+  if (dataArrIndex > -1) {
+    studentsData.splice(dataArrIndex, 1);
+    updateStudentsInfoContainer();
+  }
+};
 
 const reset = () => {
   studentsNameInput.value = "";
